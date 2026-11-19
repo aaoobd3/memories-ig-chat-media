@@ -1,0 +1,23 @@
+services:
+  chat-media:
+    build: .
+    image: chat-media:latest
+    container_name: chat-media
+    restart: unless-stopped
+    ports:
+      - "8000:8000"            # open http://localhost:8000
+    volumes:
+      - chat-media-data:/data  # database, settings, saved login and your media library
+    environment:
+      TZ: "UTC"                # e.g. Asia/Dubai, Europe/London
+      WEB_WORKERS: "4"         # web worker processes
+      MAX_REQUESTS: "2000"     # each web worker is replaced with a fresh one after this many requests
+      MAX_REQUESTS_JITTER: "200"   # + a random extra amount, so workers don't all restart together
+      ENGINE_MAX_JOBS: "50"    # the background engine is replaced after this many tasks
+      # DASHBOARD_PASSCODE: "change-me"   # optional: skip the first-run passcode screen
+      # APP_SECRET_KEY: ""                # optional: your own Fernet key for encrypting the Instagram login
+
+volumes:
+  chat-media-data:
+  # To keep the library in a folder you can see on the host, replace the line above with a
+  # bind mount in the service, e.g.  - ./data:/data  (on Linux: sudo chown -R 1000:1000 ./data)

@@ -1,0 +1,13 @@
+.venv
+**/__pycache__
+**/node_modules
+dashboard/frontend/dist
+dashboard/data
+data
+downloads
+ig_session.json
+.env
+.playwright-mcp
+.git
+*.log
+**/*.tsbuildinfo
